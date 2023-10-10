@@ -15,3 +15,7 @@
         <li><a href="../w9/index.php">Week 9</a></li>
         <li><a href="../w10/index.php">Week 10</a></li>
     </ul>
+
+<?php 
+    $file = basename($_SERVER['PHP_SELF']);
+    echo "File was last modified: " . date ("F d Y H:i:s.", filemtime($file));
