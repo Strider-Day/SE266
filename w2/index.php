@@ -1,36 +1,80 @@
 <?php
 
 $error = "";
+$fname = "";
+$lname = "";
+$married = "";
+$birthdate = "";
+$fheight = "";
+$iheight = "";
+$weight = "";
+
+
 
 if (isset($_POST['btnsubmit'])){
     $fname = filter_input(INPUT_POST, 'first');
     $lname = filter_input(INPUT_POST, 'last');
     $married = filter_input(INPUT_POST, 'married');
     $birthdate = filter_input(INPUT_POST, 'birthdate');
-    $height = filter_input(INPUT_POST, 'height', FILTER_VALIDATE_FLOAT);
+    $fheight = filter_input(INPUT_POST, 'fheight', FILTER_VALIDATE_INT);
+    $iheight = filter_input(INPUT_POST, 'iheight', FILTER_VALIDATE_INT);
     $weight = filter_input(INPUT_POST, 'weight', FILTER_VALIDATE_FLOAT);
 
-    
+    if ($fname == ""){
+        $error .= "<li>ERROR: Need to submit a first name</li>";
+    }
+    if ($lname == ""){
+        $error .= "<li>ERROR: Need to submit a last name</li>";
+    }
+    if ($married == ""){
+        $error .= "<li>ERROR: Need to check a married option</li>";
+    }
+    if ($birthdate == ""){
+        $error .= "<li>ERROR: Need to submit a birth date</li>";
+    }
+    elseif($birthdate > date("Y-m-d", time())){
+        $error .= "<li>ERROR: You entered a future date</li>";
+    }
+    if ($fheight == ""){
+        $error .= "<li>ERROR: Need to submit a height(feet)</li>";
+    }
+    elseif($fheight <= 0 or $fheight > 10){
+        $error .= "<li>ERROR: Please enter a valid height(ft)";
+        $fheight = "";
+    }
+    if ($iheight == ""){
+        $error .= "<li>ERROR: Need to submit a height(inches)</li>";
+    }
+    elseif($iheight < 0 or $iheight >= 12){
+        $error .= "<li>ERROR: Please enter a valid height(in)";
+        $iheight = "";
+    }
+    if ($weight == ""){
+        $error .= "<li>ERROR: Need to submit a weight</li>";
+    }
+    elseif($weight <= 0 or $weight >= 1000){
+        $error .= "<li>ERROR: Weight is an invalid value</li>";
+    }
+
+
+    if ($error == ""){
+        $bdate = new DateTime($birthdate);
+        $now = new DateTime();
+        $interval = $now->diff($bdate);
+
+        $kg = $weight / 2.20462;
+        $in = $fheight * 12 + $iheight;
+        $meters = $in * .0254;
+
+        $bmi = $kg/ $meters**2
+
+
+
+    }
+
 }
 
-if ($fname == ""){
-    $error .= "<li>ERROR: Need to submit a first name</li>";
-}
-if ($lname == ""){
-    $error .= "<li>ERROR: Need to submit a last name</li>";
-}
-if ($married == ""){
-    $error .= "<li>ERROR: Need to check a married option</li>";
-}
-if ($birthdate == ""){
-    $error .= "<li>ERROR: Need to submit a birth date</li>";
-}
-if ($height == ""){
-    $error .= "<li>ERROR: Need to submit a height</li>";
-}
-if ($weight == ""){
-    $error .= "<li>ERROR: Need to submit a weight</li>";
-}
+
 
 
 
@@ -51,10 +95,10 @@ if ($weight == ""){
     
     <form action="index.php" name="patient" method="post">
         <label>First Name: </label>
-        <input type="text" name="first" />
+        <input type="text" name="first" value="<?php echo $fname;?>" />
         <br>
         <label>Last Name: </label>
-        <input type="text" name="last" />
+        <input type="text" name="last" value="<?php echo $lname;?>"/>
         <br>
         <label>Married: </label>
         <input type="radio" id="yes" name="married" value="yes" />
@@ -63,15 +107,28 @@ if ($weight == ""){
         <label for="no">No</label>
         <br>
         <label>Birth Date: </label>
-        <input type="Date" name="birthdate" />
+        <input type="Date" name="birthdate" value="<?php echo $birthdate;?>"/>
         <br>
-        <label>Height (in): </label>
-        <input type="text" name="height" />
+        <label>Height </label>
+        <label for="fheight">Feet</label>
+        <input type="text" name="fheight" value="<?php echo $fheight;?>"/>
+        <label for="iheight">Inches</label>
+        <input type="text" name="iheight" value="<?php echo $iheight;?>"/>
         <br>
         <label>Weight (lbs): </label>
-        <input type="text" name="weight" />
+        <input type="text" name="weight" value="<?php echo $weight;?>"/>
         <br>
         <input type="submit" name="btnsubmit" />
     </form>
+    <br>
+    <br>
+    <div class="confirm" display="none">
+        <h2> Confirmation Info </h2>
+        <?php echo "<li>Name: $fname $lname</li>" ?>
+        <?php echo "<li>Married: $married</li>" ?>
+        <?php echo "<li>Birthdate: $birthdate</li>" ?>
+        <?php echo "<li>Age: $age</li>" ?>
+
+    </div>
 </body>
 </html>
