@@ -8,6 +8,11 @@ $birthdate = "";
 $fheight = "";
 $iheight = "";
 $weight = "";
+$age = "";
+$bmi = "";
+$classification = "";
+$status = "display: none";
+
 
 
 
@@ -19,6 +24,8 @@ if (isset($_POST['btnsubmit'])){
     $fheight = filter_input(INPUT_POST, 'fheight', FILTER_VALIDATE_INT);
     $iheight = filter_input(INPUT_POST, 'iheight', FILTER_VALIDATE_INT);
     $weight = filter_input(INPUT_POST, 'weight', FILTER_VALIDATE_FLOAT);
+
+    $status = "none";
 
     if ($fname == ""){
         $error .= "<li>ERROR: Need to submit a first name</li>";
@@ -60,15 +67,29 @@ if (isset($_POST['btnsubmit'])){
     if ($error == ""){
         $bdate = new DateTime($birthdate);
         $now = new DateTime();
-        $interval = $now->diff($bdate);
+        $age = $now->diff($bdate);
+        $age = $age->y;
 
         $kg = $weight / 2.20462;
         $in = $fheight * 12 + $iheight;
         $meters = $in * .0254;
 
-        $bmi = $kg/ $meters**2
+        $bmi = $kg/ $meters**2;
 
+        if ($bmi < 18.5){
+            $classification = "underweight";
+        }
+        elseif ($bmi >= 18.5 and $bmi < 25){
+            $classification = "normal weight";
+        }
+        elseif ($bmi >= 25 and $bmi < 30){
+            $classification = "normal weight";
+        }
+        else{
+            $classification = "obese";
+        }
 
+        $status = "";
 
     }
 
@@ -122,12 +143,16 @@ if (isset($_POST['btnsubmit'])){
     </form>
     <br>
     <br>
-    <div class="confirm" display="none">
+    <div class="confirm" style="<?php echo $status?>">
         <h2> Confirmation Info </h2>
         <?php echo "<li>Name: $fname $lname</li>" ?>
         <?php echo "<li>Married: $married</li>" ?>
         <?php echo "<li>Birthdate: $birthdate</li>" ?>
         <?php echo "<li>Age: $age</li>" ?>
+        <?php echo "<li>Height: $fheight ft $iheight in</li>" ?>
+        <?php echo "<li>Weight: $weight</li>" ?>
+        <?php echo "<li>BMI: $bmi</li>" ?>
+        <?php echo "<li>Classification: $classification</li>" ?>
 
     </div>
 </body>
