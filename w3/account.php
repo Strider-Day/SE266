@@ -17,11 +17,16 @@ abstract class Account
 	public function __construct ($id, $bal, $startDt) 
 	{
 	   // write code here
+	   $this->accountId = $id;
+	   $this->balance = $bal;
+	   $this->startDate = $startDt;
 	} // end constructor
 	
 	public function deposit ($amount) 
 	{
 		// write code here
+		$this->balance += $amount;
+
 	} // end deposit
 
 	// This is an abstract method. 
@@ -31,22 +36,28 @@ abstract class Account
 	
 	public function getStartDate() 
 	{
-		// write code here
+		return $this->startDate;// write code here
 	} // end getStartDate
 
 	public function getBalance() 
 	{
-		// write code here
+		return $this->balance;// write code here
 	} // end getBalance
 
 	public function getAccountId() 
 	{
-		// write code here
+		return $this->accountId;// write code here
 	} // end getAccountId
 
 	// Display AccountID, Balance and StartDate in a nice format
 	protected function getAccountDetails()
 	{
+		$accountDetails= "<li>Starting Date: $this->startDate</li>";
+		$accountDetails.= "<li>Balance: $this->balance</li>";
+		$accountDetails.= "<li>Account ID: $this->accountId</li>";
+
+		return $accountDetails;
+		
 		// write code here
 	} // end getAccountDetails
 	
