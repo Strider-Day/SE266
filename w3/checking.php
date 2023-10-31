@@ -1,6 +1,6 @@
 <?php
  
-require_once "./account.php";
+//require_once "./account.php";
 
 class CheckingAccount extends Account 
 {
@@ -11,7 +11,9 @@ class CheckingAccount extends Account
 		// write code here. Return true if withdrawal goes through; false otherwise
 		if ($this->balance - $amount >= self::OVERDRAW_LIMIT){
 			$this->balance -= $amount;
+			return true;
 		}
+		return false;
 
 	} // end withdrawal
 

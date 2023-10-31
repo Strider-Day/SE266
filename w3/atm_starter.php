@@ -5,7 +5,7 @@
     include "./savings.php";
     
 
-    if(isset ($_POST['checkbal'])){
+    if(isset ($_POST['checkingWithdrawAmount'])){
         $cvalue = filter_input(INPUT_POST, 'checkbal');
         $svalue = filter_input(INPUT_POST, 'savbal');
     }
@@ -15,29 +15,29 @@
     }
 
     $checking = new CheckingAccount ('C123', $cvalue, '12-20-2019');
-    $savings = new SavingsAccount ('C123', $svalue, '12-20-2020');
+    $savings = new SavingsAccount ('S123', $svalue, '12-20-2020');
 
 
 
     if (isset ($_POST['withdrawChecking'])) 
     {
-        echo "I pressed the checking withdrawal button";
-        //$wcheck = filter_input(INPUT_POST, 'checkingWithdrawAmount');
-       // $checking->withdrawal($wcheck);
-
-
+        $wcheck = filter_input(INPUT_POST, 'checkingWithdrawAmount');
+        $checking->withdrawal($wcheck);
     } 
     else if (isset ($_POST['depositChecking'])) 
     {
-        echo "I pressed the checking deposit button";
+        $dcheck = filter_input(INPUT_POST, 'checkingDepositAmount');
+        $checking->deposit($dcheck);
     } 
     else if (isset ($_POST['withdrawSavings'])) 
     {
-        echo "I pressed the savings withdrawal button";
+        $wsavings = filter_input(INPUT_POST, 'savingsWithdrawAmount');
+        $savings->withdrawal($wsavings);
     } 
     else if (isset ($_POST['depositSavings'])) 
     {
-        echo "I pressed the savings deposit button";
+        $dsavings = filter_input(INPUT_POST, 'savingsDepositAmount');
+        $savings->deposit($dsavings);
     } 
      
 ?>
@@ -85,10 +85,10 @@
             
             <div class="account">
               
-                    
+                
                     <div class="accountInner">
                         <?= $checking->getAccountDetails();?>
-                        <input type="hidden" name="checkbal" value="<?= $checking->getBalance()?>">
+                        <input type="hidden" name="checkbal" value="<?= $checking->getBalance();?>">
                         <input type="text" name="checkingWithdrawAmount" value="" />
                         <input type="submit" name="withdrawChecking" value="Withdraw" />
                     </div>
@@ -97,15 +97,13 @@
                         <input type="text" name="checkingDepositAmount" value="" />
                         <input type="submit" name="depositChecking" value="Deposit" /><br />
                     </div>
-            
             </div>
 
             <div class="account">
-               
-                    
+                 
                     <div class="accountInner">
                         <?= $savings->getAccountDetails();?>
-                        <input type="hidden" name="savbal" value="<?= $savings->getBalance()?>">
+                        <input type="hidden" name="savbal" value="<?= $savings->getBalance();?>">
                         <input type="text" name="savingsWithdrawAmount" value="" />
                         <input type="submit" name="withdrawSavings" value="Withdraw" />
                     </div>
@@ -113,7 +111,6 @@
                         <input type="text" name="savingsDepositAmount" value="" />
                         <input type="submit" name="depositSavings" value="Deposit" /><br />
                     </div>
-            
             </div>
             
         </div>
