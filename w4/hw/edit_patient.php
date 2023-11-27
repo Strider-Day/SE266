@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NFL Teams</title>
+    <title>Patient edit</title>
 </head>
 <body>
     
@@ -13,7 +13,7 @@
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
-    include __DIR__ . '/model/model_teams.php';
+    include __DIR__ . '/model/model_patient.php';
     
     $error = "";
 
@@ -53,51 +53,37 @@
 
 ?>
 
-    <style type="text/css">
-       .wrapper {
-            display: grid;
-            grid-template-columns: 180px 400px;
-        }
-        .label {
-            text-align: right;
-            padding-right: 10px;
-            margin-bottom: 5px;
-        }
-        label {
-           font-weight: bold;
-        }
-        input[type=text] {width: 200px;}
-        .error {color: red;}
-        div {margin-top: 5px;}
-    </style>
-
     <!-- ADD TEAM FORM -->
-    <h2><?= $action; ?> NFL Team</h2>
+    <h2><?= $action; ?> Patient Info</h2>
 
-    <form name="team" method="post" action="edit_team.php">
+    <form name="team" method="post" action="edit_patient.php">
         
         <!--FORM-->
         <div class="wrapper">
-            <input type="hidden" name="team_id" value="<?= $id; ?>" />
-            <div class="label">
-                <label>Team Name:</label>
-            </div>
-            <div>
-                <input type="text" name="team_name" value="<?= $teamName; ?>" />
-            </div>
-            <div class="label">
-                <label>Divison:</label>
-            </div>
-            <div>
-                <input type="text" name="division" value="<?= $division; ?>" />
-            </div>
+        <form method="post" name="addpatient">
+            <label>First Name: </label>
+            <input type="text" name="first" value="<?php echo $FirstName;?>" />
+            <br>
+            <label>Last Name: </label>
+            <input type="text" name="last" value="<?php echo $LastName;?>"/>
+            <br>
+            <label>Married: </label>
+            <input type="radio" id="yes" name="married" value="1" />
+            <label for="yes">Yes</label>
+            <input type="radio" id="no" name="married" value="0" />
+            <label for="no">No</label>
+            <br>
+            <label>Birth Date: </label>
+            <input type="Date" name="birthdate" value="<?php echo $BirthDate;?>"/>
+            <br>
+
 
             <div>
                 &nbsp;
             </div>
             <div>
                 <!-- WE CAN USE OUR 'ACTION' VALUE FROM THE GET RESULT TO MANIPULATE THE FORM! -->
-                <input type="submit" name="<?= $action; ?>_team" value="<?= $action; ?> Team Information" />
+                <input type="submit" name="<?= $action; ?>_patient" value="<?= $action; ?> Patient Information" />
             </div>
            
         </div>
