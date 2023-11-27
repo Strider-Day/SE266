@@ -9,20 +9,13 @@
     $LastName = "";
     $Married = "";
     $BirthDate = "";
-    $now = new DateTime;
-
-    function age($bday) {  
-        $date = new DateTime($bday);
-        $now = new DateTime();
-        $interval = $now->diff($date);
-        return $interval->y;
-    }
+    
 
     if (isset($_POST['storepatient'])){
-        $FirstName = filter_input(INPUT_POST, 'first_name');
-        $LastName = filter_input(INPUT_POST, 'last_name');
+        $FirstName = filter_input(INPUT_POST, 'first');
+        $LastName = filter_input(INPUT_POST, 'last');
         $Married = filter_input(INPUT_POST, 'married');
-        $BirthDate = filter_input(INPUT_POST, 'bday');
+        $BirthDate = filter_input(INPUT_POST, 'birthdate');
 
 
         if ($FirstName == "") $error .= "<li>Please Provide first name";
@@ -42,7 +35,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Add Patient</title>
 </head>
 <body>
     <div class="wrapper">

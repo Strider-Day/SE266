@@ -17,50 +17,64 @@
     
     $error = "";
 
-    //IF COMING FROM A GET REQUEST, ASSIGN OUR ACTION AND ID!
+    
+
+
     if(isset($_GET['action'])){
         $action = filter_input(INPUT_GET, 'action');
-        $id = filter_input(INPUT_GET, 'teamId');
+        $id = filter_input(INPUT_GET, 'Patientid');
 
+
+        
         if($action == "Update"){
-            $team = getTeam($id);
-            $teamName = $team["teamName"];
-            $division = $team['division'];
-        }else{
-            $teamName = "";
-            $division = "";
+            
+            $patient = getPatient($id);
+            $FirstName = $patient["patientFirstName"];
+            $LastName = $patient["patientLastName"];
+            $Married = $patient["patientMarried"];
+            $BirthDate = $patient["patientBirthDate"];
+            //
+        }
+        else{
+            $FirstName = "";
+            $LastName = "";
+            $Married = "";
+            $BirthDate = "";
         }
 
-        //UPDATE TEAM WAS SUBMITTED IN FORM -> GRAB SUBMITTED VALUES AND PASS TO THE updateTeam() METHOD!
-    }elseif (isset($_POST['Update_team'])){
-        $action = filter_input(INPUT_POST, 'action');
-        $id = filter_input(INPUT_POST, 'team_id');
-        $teamName = filter_input(INPUT_POST, 'team_name');
-        $division = filter_input(INPUT_POST, 'division');
-
-        updateTeam($id, $teamName, $division);
-        header('Location: view_teams.php');
-
-        //ADD TEAM WAS SUBMITTED IN FORM -> GRAB SUBMITTED VALUES AND PASS TO THE addTeam() METHOD!
-    }elseif (isset($_POST['Add_team'])){
-        $action = filter_input(INPUT_POST, 'action');
-        $teamName = filter_input(INPUT_POST, 'team_name');
-        $division = filter_input(INPUT_POST, 'division');
         
-        addTeam($teamName, $division);
-        header('Location: view_teams.php');
+    }
+    if (isset($_POST['Update_patient'])){
+        $id = filter_input(INPUT_POST, 'id');
+        $FirstName = filter_input(INPUT_POST, 'first');
+        $LastName = filter_input(INPUT_POST, 'last');
+        $Married = filter_input(INPUT_POST, 'married');
+        $BirthDate = filter_input(INPUT_POST, 'birthdate');
+
+
+        updatePatient($id, $FirstName, $LastName, $Married, $BirthDate);
+        header('Location: view_patient.php');
+
+       
+    }
+    elseif (isset($_POST['Delete_patient'])){
+        $id = filter_input(INPUT_POST, 'id');
+        
+        deletePatient($id);
+        header('Location: view_patient.php');
     }
 
 ?>
 
-    <!-- ADD TEAM FORM -->
-    <h2><?= $action; ?> Patient Info</h2>
+
+    <h2>Update Patient Info</h2>
 
     <form name="team" method="post" action="edit_patient.php">
         
         <!--FORM-->
         <div class="wrapper">
         <form method="post" name="addpatient">
+            <input type="hidden" name="id" value="<?= $id?>" >
             <label>First Name: </label>
             <input type="text" name="first" value="<?php echo $FirstName;?>" />
             <br>
@@ -68,9 +82,9 @@
             <input type="text" name="last" value="<?php echo $LastName;?>"/>
             <br>
             <label>Married: </label>
-            <input type="radio" id="yes" name="married" value="1" />
+            <input type="radio" id="yes" name="married" value="1" <?= $Married ==1?"checked":""?>/>
             <label for="yes">Yes</label>
-            <input type="radio" id="no" name="married" value="0" />
+            <input type="radio" id="no" name="married" value="0" <?= $Married ==0?"checked":""?>/>
             <label for="no">No</label>
             <br>
             <label>Birth Date: </label>
@@ -82,17 +96,19 @@
                 &nbsp;
             </div>
             <div>
-                <!-- WE CAN USE OUR 'ACTION' VALUE FROM THE GET RESULT TO MANIPULATE THE FORM! -->
-                <input type="submit" name="<?= $action; ?>_patient" value="<?= $action; ?> Patient Information" />
+            <input type="submit" name="Update_patient" value="Update Patient Information" />
             </div>
-           
+            <div>
+                &nbsp;
+            </div>
+            <div>
+            <input type="submit" name="Delete_patient" value="Delete Patient Information" />
+            </div>
+        </form>   
         </div>
 
        
     </form>
-    <p>
-       
-    </p>
 
 
     </body>

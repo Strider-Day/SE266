@@ -24,7 +24,7 @@
     <?php
         
         include __DIR__ . '/model/model_patient.php';
-        $patients = getPatient();
+        $patients = getPatients();
         
         
     ?>
@@ -33,6 +33,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Married</th>
@@ -42,15 +43,14 @@
             <tbody>
            
             
-            <?php foreach ($patients as $p):                 
-            ?>
+            <?php foreach ($patients as $p): ?>
                 <tr>
                     <td><?= $p['id']; ?></td>
                     <td><?= $p['patientFirstName']; ?></td>
-                    <td><?= $p['patientLirstName']; ?></td>
-                    <td><?= $p['patientMarried']; ?></td>
+                    <td><?= $p['patientLastName']; ?></td>
+                    <td><?= $p['patientMarried']==0?"No":"Yes"; ?></td>
                     <td><?= $p['patientBirthDate']; ?></td> 
-                    <td><a href="edit_patient.php?action=Update&id=<?= $t['id']; ?>">Edit</a></td>        
+                    <td><a href="edit_patient.php?action=Update&Patientid=<?= $p['id']; ?>">Edit</a></td>        
                 </tr>
             <?php endforeach; ?>
             </tbody>

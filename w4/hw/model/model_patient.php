@@ -2,7 +2,20 @@
 
     include (__DIR__ . '/db.php');
     
-    
+    function getPatients(){
+        global $db;
+
+        $results = [];
+
+        $sqlstring = $db ->prepare("SELECT id, patientFirstName, patientLastName, patientMarried, patientBirthDate FROM patients ORDER BY patientLastName");
+
+        if ($sqlstring -> execute() && $sqlstring -> rowCount() > 0){
+            $results = $sqlstring -> fetchAll(PDO::FETCH_ASSOC);
+
+        }
+
+        return ($results);
+    }
 
 
     function addpatient ($FirstName, $LastName, $Married, $BirthDate) {
@@ -10,19 +23,21 @@
         //needs global scope since object is coming from outside the function
         global $db;
 
+        $BirthDate = new DateTimeImmutable($BirthDate);
+
         //initialize return dataset
         $result = "";
 
         //prepare our SQL statment
-        $sql = "INSERT INTO patients set patientFirstName = :f, patientLastName = :l, patientMarried = :m, patientBirthDate = :b, ";
-        $stmt = $db->prepare($sql);
+        //$sql = "INSERT INTO patients set patientFirstName = :f, patientLastName = :l, patientMarried = :m, patientBirthDate = :b, ";
+        $stmt = $db->prepare("INSERT INTO patients set patientFirstName = :f, patientLastName = :l, patientMarried = :m, patientBirthDate = :b ");
 
         //bind values
         $binds = array(
             ":f" => $FirstName,
             ":l" => $LastName,
             ":m" => $Married,
-            ":b" => $BirthDate
+            ":b" => $BirthDate ->format("Y-m-d H:i:s")
         );
         
         //if our SQL statement returns results, populate our results confirmation string
@@ -37,18 +52,22 @@
 
     
 
-    function updateTeam ($id, $teamName, $division) {
+    function updatePatient ($id, $FirstName, $LastName, $Married, $BirthDate) {
         global $db;
 
+        $formatdate = new DateTimeImmutable($BirthDate);
+
         $results = "";
-        $sql = "UPDATE teams SET teamName = :teamName, division = :division WHERE id=:id ";
+        $sql = "UPDATE patients SET patientFirstName = :f, patientLastName = :l, patientMarried = :m, patientBirthDate = :b  WHERE id=:id ";
         $stmt = $db->prepare($sql);
 
         $stmt->bindValue(':id', $id);
-        $stmt->bindValue(':teamName', $teamName);
-        $stmt->bindValue(':division', $division);
+        $stmt->bindValue(':f', $FirstName);
+        $stmt->bindValue(':l', $LastName);
+        $stmt->bindValue(':m', $Married);
+        $stmt->bindValue(':b', $formatdate ->format("Y-m-d H:i:s"));
 
-      
+
         if ($stmt->execute() && $stmt->rowCount() > 0) {
             $results = 'Data Updated';
         }
@@ -57,11 +76,11 @@
     }
 
  
-    function deleteTeam ($id) {
+    function deletePatient ($id) {
         global $db;
         
         $results = "Data was not deleted";
-        $stmt = $db->prepare("DELETE FROM teams WHERE id=:id");
+        $stmt = $db->prepare("DELETE FROM patients WHERE id=:id");
         
         $stmt->bindValue(':id', $id);
             
@@ -72,13 +91,13 @@
         return ($results);
     }
 
-    function getPatient(){
+    function getPatient($id){
 
         global $db;
         
         $result = [];
-        $stmt = $db->prepare("SELECT * FROM patients");
-        //$stmt->bindValue(':id', $id);
+        $stmt = $db->prepare("SELECT * FROM patients WHERE id=:id");
+        $stmt->bindValue(':id', $id);
        
         if ( $stmt->execute() && $stmt->rowCount() > 0 ) {
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
