@@ -1,3 +1,5 @@
+<?php session_start();?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,11 +21,23 @@
         <h1>Patients</h1>
        
         <a href="add_patient.php">Add New Patient</a>
-
-        <a href="login.php">Login</a>
-
+        <br>
+        <?php 
+        if (isset($_SESSION['user'])){?>
+            <a href="search_patient.php">Search Patient</a>
+            <br>
+            <a href="logoff.php">Logout</a>
+        <?php
+        }
+        else{?>
+            <a href="login.php">Login</a>
+        <?php 
+        }
+        ?>
    
     <?php
+
+        
         
         include __DIR__ . '/model/model_patient.php';
         $patients = getPatients();

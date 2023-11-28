@@ -22,11 +22,11 @@
 
         $results = "";
 
-        $stmt = $db->prepare("SELECT * FROM userlogin WHERE 0=0 AND login_user LIKE '%:l%' AND login_pass LIKE '%:p%'");
+        $stmt = $db->prepare("SELECT * FROM userlogin WHERE 0=0 AND login_user LIKE :l AND login_pass LIKE :p");
 
         $binds = array(
             ":l" => $LoginUser,
-            ":p" => $LoginPass 
+            ":p" => sha1($LoginPass) 
         );
 
         if ($stmt->execute($binds) && $stmt->rowCount() > 0) {

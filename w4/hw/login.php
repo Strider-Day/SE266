@@ -1,4 +1,5 @@
 <?php
+    session_start();
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
@@ -11,7 +12,10 @@
 
         $Result = Login($LoginUser, $LoginPass);
 
-        if ($Result = 1){
+        if ($Result == 1){
+            $_SESSION['user'] = $LoginUser;
+
+
             header ('Location: view_patient.php');
         }
 
