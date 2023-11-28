@@ -20,6 +20,8 @@
        
         <a href="add_patient.php">Add New Patient</a>
 
+        <a href="login.php">Login</a>
+
    
     <?php
         

@@ -7,7 +7,7 @@
         <li><a href="../w1/index.php">Week 1</a></li>
         <li><a href="../w2/index.php">Week 2</a></li>
         <li><a href="../w3/atm_starter.php">Week 3</a></li>
-        <li><a href="../w4/index.php">Week 4</a></li>
+        <li><a href="../w4/view_patient.php">Week 4</a></li>
         <li><a href="../w5/index.php">Week 5</a></li>
         <li><a href="../w6/index.php">Week 6</a></li>
         <li><a href="../w7/index.php">Week 7</a></li>

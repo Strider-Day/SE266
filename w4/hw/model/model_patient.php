@@ -17,6 +17,27 @@
         return ($results);
     }
 
+    function Login($LoginUser, $LoginPass){
+        global $db;
+
+        $results = "";
+
+        $stmt = $db->prepare("SELECT * FROM userlogin WHERE 0=0 AND login_user LIKE '%:l%' AND login_pass LIKE '%:p%'");
+
+        $binds = array(
+            ":l" => $LoginUser,
+            ":p" => $LoginPass 
+        );
+
+        if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
+            $results = "1";
+        }
+        else{
+            $results = "2";
+        }
+        return $results;
+    }
+
 
     function addpatient ($FirstName, $LastName, $Married, $BirthDate) {
         //grab $db object - 
@@ -105,6 +126,35 @@
         }
          
         return ($result);
+    }
+
+    function searchPatients ($first, $last, $married) {
+        global $db;
+        $binds = array();
+    
+        $sql =  "SELECT * FROM  patients WHERE 0=0";
+        if ($first != "") {
+            $sql .= " AND patientFirstName LIKE :first";
+            $binds['first'] = '%'.$first.'%';
+        }
+    
+        if ($last != "") {
+            $sql .= " AND patientLastName LIKE :last";
+            $binds['last'] = '%'.$last.'%';
+        }
+            
+        if ($married != "") {
+            $sql .= " AND patientMarried = :married";
+            $binds['married'] = $married;
+        }
+    
+        $results = array();
+        $stmt = $db->prepare($sql);
+        if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+             
+        return ($results);
     }
 
     //$teams = getTeams();

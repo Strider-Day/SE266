@@ -1,7 +1,25 @@
+<?php
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    include __DIR__ . '/model/model_patient.php';
 
+    $Result = 0;
+    if (isset($_POST['login'])){
+        $LoginUser = filter_input(INPUT_POST, 'userName');
+        $LoginPass = filter_input(INPUT_POST, 'password');
+
+        $Result = Login($LoginUser, $LoginPass);
+
+        if ($Result = 1){
+            header ('Location: view_patient.php');
+        }
+
+    }
+?>
 
 <div class="container">
-    <h2>NFL Team Management</h2>
+    <h2>Login Page</h2>
 
     <div id="mainDiv">
         <form method="post" action="login.php">
@@ -11,11 +29,11 @@
             </div>
             <div class="rowContainer">
                 <div class="col1">User Name:</div>
-                <div class="col2"><input type="text" name="userName" value="donald"></div> 
+                <div class="col2"><input type="text" name="userName" ></div> 
             </div>
             <div class="rowContainer">
                 <div class="col1">Password:</div>
-                <div class="col2"><input type="password" name="password" value="duck"></div> 
+                <div class="col2"><input type="password" name="password" ></div> 
             </div>
               <div class="rowContainer">
                 <div class="col1">&nbsp;</div>
@@ -23,9 +41,8 @@
             </div>
             
         </form>
+
+        <p><?= $Result==2?"Login Failed. Try Again":"";?></p>
         
     </div>
-
-    <?php
-      include_once __DIR__ . "/controllers/footer.php";
-    ?>
+</div>
