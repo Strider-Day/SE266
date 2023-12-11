@@ -2,12 +2,12 @@
 
     include (__DIR__ . '/db.php');
     
-    function getPatients(){
+    function getgames(){
         global $db;
 
         $results = [];
 
-        $sqlstring = $db ->prepare("SELECT GameId, GameName, PublishedDate, Rated, Rewview, Developer FROM games ORDER BY GameName");
+        $sqlstring = $db ->prepare("SELECT GameId, GameName, PublishedDate, Rated, Review, Developer FROM games ORDER BY GameName");
 
         if ($sqlstring -> execute() && $sqlstring -> rowCount() > 0){
             $results = $sqlstring -> fetchAll(PDO::FETCH_ASSOC);
@@ -42,7 +42,7 @@
     function addgame ($GameName, $PublishedDate, $Rated, $Review, $Developer) {
         global $db;
 
-        $BirthDate = new DateTimeImmutable($BirthDate);
+        $PublishedDate = new DateTimeImmutable($PublishedDate);
 
 
         $result = "";

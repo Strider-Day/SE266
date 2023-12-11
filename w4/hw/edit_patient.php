@@ -33,7 +33,7 @@
             $LastName = $patient["patientLastName"];
             $Married = $patient["patientMarried"];
             $BirthDate = $patient["patientBirthDate"];
-            //
+            
         }
         else{
             $FirstName = "";

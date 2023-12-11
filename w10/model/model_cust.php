@@ -85,7 +85,7 @@
         global $db;
         
         $result = [];
-        $stmt = $db->prepare("SELECT * FROM patients WHERE CustId=:id");
+        $stmt = $db->prepare("SELECT * FROM customers WHERE CustId=:id");
         $stmt->bindValue(':id', $CustId);
        
         if ( $stmt->execute() && $stmt->rowCount() > 0 ) {
@@ -96,7 +96,7 @@
         return ($result);
     }
 
-    function searchPatients ($first, $last) {
+    function searchCustomer ($first, $last) {
         global $db;
         $binds = array();
     
@@ -107,7 +107,7 @@
         }
     
         if ($last != "") {
-            $sql .= " AND patientLastName LIKE :last";
+            $sql .= " AND LastName LIKE :last";
             $binds['last'] = '%'.$last.'%';
         }
     
