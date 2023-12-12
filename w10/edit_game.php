@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game edit</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <title>Edit Game</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+   
 
 <?php 
+    session_start();
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
@@ -53,11 +59,11 @@
         $Review = filter_input(INPUT_POST, 'review');
         $Developer = filter_input(INPUT_POST, 'dev');
 
-        if ($GameName == "") $error .= "<li>Please Provide game name";
-        if ($PublishedDate == "") $error .= "<li>Please Provide published date";
-        if ($Rated == "") $error .= "<li>Please Provide rated viewing";
-        if ($Review == "") $error .= "<li>Please Provide the review";
-        if ($Developer == "") $error .= "<li>Please Provide the developer";
+        if ($GameName == "") $error .= "<li>Please Provide game name</li>";
+        if ($PublishedDate == "") $error .= "<li>Please Provide published date</li>";
+        if ($Rated == "") $error .= "<li>Please Provide rated viewing</li>";
+        if ($Review == "") $error .= "<li>Please Provide the review</li>";
+        if ($Developer == "") $error .= "<li>Please Provide the developer</li>";
 
 
 
@@ -78,6 +84,24 @@
     }
 
 ?>
+    <header>
+        <div class="container text-center">
+            <div class="row">
+            <?php 
+            if (isset($_SESSION['user'])){?>
+                <div class="col-sm-2"><a href="logoff.php">Logout</a></div>
+            <?php
+            }
+            else{?>
+                <div class="col-sm-2"><a href="login.php">Employee Login</a></div>
+            <?php 
+            }
+            ?>
+                <div class="col-sm-12"><h1>Generation Gamers</h1></div>
+            </div>
+        </div>
+    </header> 
+
 
 
     <h2>Update Game Info</h2>
@@ -116,7 +140,13 @@
             <div>
             <input type="submit" name="Delete_game" value="Delete Game" />
             </div>
-        </form>   
+        </form> 
+        <br>
+        <a href="index.php">Back to View All</a>  
+        <br>
+        <ul>
+            <?= $error ?>
+        </ul>
         </div>
 
        

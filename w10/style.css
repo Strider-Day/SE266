@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+header{
+background-color: aquamarine;
+}
+
+.col-sm-2{
+    float: right;
+}
+
+body{
+    background-color: brown;
+    color: blue;
+}
+
+.wrapper{
+    text-align: center;
+}
+
+h2{
+    text-align: center;
+}
+
+a{
+    font-weight: bold;
+    color: black;
+}

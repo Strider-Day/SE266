@@ -38,8 +38,26 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <title>Search Customers</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<header>
+        <div class="container text-center">
+            <div class="row">
+            <?php 
+            if (isset($_SESSION['user'])){?>
+                <div class="col-sm-2"><a href="logoff.php">Logout</a></div>
+            <?php
+            }
+            else{?>
+                <div class="col-sm-2"><a href="login.php">Employee Login</a></div>
+            <?php 
+            }
+            ?>
+                <div class="col-sm-12"><h1>Generation Gamers</h1></div>
+            </div>
+        </div>
+    </header>
     <div class="wrapper">
         <form method="post" name="custsearch">
             <label>First Name: </label>

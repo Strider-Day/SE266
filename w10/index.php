@@ -9,6 +9,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <title>GG Home</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     
@@ -95,7 +97,7 @@
         <div class="container">
                     
             <div class="col-sm-12">
-                <h2>Customer</h2>
+                <h2>Customers</h2>
             
                 <a href="add_cust.php">Add New Customer</a>
                 <br>

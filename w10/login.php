@@ -22,6 +22,37 @@
     }
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<header>
+        <div class="container text-center">
+            <div class="row">
+            <?php 
+            if (isset($_SESSION['user'])){?>
+                <div class="col-sm-2"><a href="logoff.php">Logout</a></div>
+            <?php
+            }
+            else{?>
+                <div class="col-sm-2"><a href="login.php">Employee Login</a></div>
+            <?php 
+            }
+            ?>
+                <div class="col-sm-12"><h1>Generation Gamers</h1></div>
+            </div>
+        </div>
+</header>
+
 <div class="container">
     <h2>Login Page</h2>
 
